@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Corona 7-Tage-Inzidenz der letzten Tage</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Hier findest du die 7-Tage-Inzidenzen der letzten Tage f&uuml;r deinen Landkreis. Also alle f&uuml;r die Bundes-Notbremse relevanten Werte.">
+	<link rel="canonical" href="https://corona-germany.justus-d.de/incidence/">
+	<script async defer data-domain="corona-germany.justus-d.de" src="https://plausible.herrblauzahn.de/js/plausible.hash.js"></script>
+	<style type="text/css">
+		body {
+			margin: 0;
+			font-family: sans-serif;
+			background-color: #222222;
+			color: white;
+		}
+		.disclaimer {
+			position: fixed;
+			bottom: 4px;
+			right: 4px;
+			color: #444444;
+			font-size: 14px;
+		}
+		.wrapper {
+			margin: 0 auto;
+			width: 320px;
+			padding-top: 48px;
+			padding-bottom: 20px;
+		}
+		.start {
+			float: left;
+			margin-top: -26px;
+			margin-left: 0px;
+		}
+		.district {
+			font-size: 28px;
+			text-align: center;
+		}
+		.heading {
+			font-size: 28px;
+			text-align: center;
+		}
+		.description {
+			color: lightgray;
+			font-size: 16px;
+			text-align: center;
+		}
+		.top5 {
+			margin-top: 32px;
+		}
+		.date {
+			/*padding-left: 16px;*/
+			margin-top: 48px;
+			font-size: 16px;
+			color: lightgray;
+		}
+		.date-dim {
+			color: #8a8a8a;
+		}
+		.incidence {
+			font-size: 48px;
+			text-align: center;
+			margin-top: -26px;
+		}
+		.incidence-dim {
+			color: #a8a8a8;
+		}
+		.list {
+			margin-top: 32px;
+			margin-bottom: 32px;
+		}
+		.list-item {
+			margin-top: 10px;
+		}
+		.list-button {
+			color: white;
+			font-size: 16px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			text-decoration: none;
+		}
+		a {
+			color: white;
+			/*font-size: 16px;*/
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		.list-button:hover {
+			text-decoration: underline;
+		}
+		.show-table {
+			text-align: center;
+			margin-top: 32px;
+		}
+		#table {
+			margin-top: 32px;
+			text-align: center;
+		}
+		.table-item {
+			margin: 10px auto;
+			color: #ddd;
+			width: 150px;
+			text-align: left;
+		}
+		footer, a.footer {
+			text-align: center;
+			font-size: 12px;
+			color: gray;
+		}
+		footer {
+			margin-bottom: 16px;
+		}
+	</style>
+</head>
+	</head>
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root">
+			<div class="wrapper">
+				<div class="heading">Bundesland</div>
+				<div class="description">w&auml;hle dein Bundesland</div>
+				<div class="list">
+					<div class="list-item">
+						<a class="list-button" href="#state/BW">Baden-Württemberg</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/BY">Bayern</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/BE">Berlin</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/BB">Brandenburg</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/HB">Bremen</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/HH">Hamburg</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/HE">Hessen</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/MV">Mecklenburg-Vorpommern</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/NI">Niedersachsen</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/NW">Nordrhein-Westfalen</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/RP">Rheinland-Pfalz</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/SL">Saarland</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/SN">Sachsen</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/ST">Sachsen-Anhalt</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/SH">Schleswig-Holstein</a>
+					</div>
+					<div class="list-item">
+						<a class="list-button" href="#state/TH">Thüringen</a>
+					</div>
+				</div>
+			</div>
+			<footer>
+				<span>Datenquelle: RKI (siehe GitHub: <a class="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK">rki-covid-api</a>)</span><br>
+				<span>Alle Angaben ohne Gew&auml;hr.</span>
+			</footer>
+		</div>
+	</body>
+</html>
