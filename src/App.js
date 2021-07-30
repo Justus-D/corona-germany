@@ -13,12 +13,11 @@ import React from 'react';
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
+const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
+
 function Loading() {
 	return (
-		<div>
-			<a href="#" class="list-button start">Start</a>
-			<div class="district">Laden...</div>
-		</div>
+		<Header title="Laden..." />
 	);
 }
 
@@ -32,8 +31,9 @@ function ListItem(props) {
 	);
 }
 
+
 function StatesList() {
-	const statesJSON = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
+	const statesJSON = statesList;
 	var out = [];
 	const states = Object.keys(statesJSON["data"]);
 	var key;
@@ -46,24 +46,23 @@ function StatesList() {
 	return out;
 }
 
-function States() {
+function Header(props) {
 	return (
 		<div>
-			<div class="heading">Bundesland</div>
-			<div class="description">w&auml;hle dein Bundesland</div>
-			<div class="list">
-				<StatesList />
-			</div>
+			{props.hideStart ? null : <a href="#" className="list-button start">Start</a>}
+			<div className="heading">{props.title}</div>
+			{props.subtitle ? <div className="description">{props.subtitle}</div> : null}
 		</div>
 	);
 }
 
-function DistrictsHeader() {
+function States() {
 	return (
 		<div>
-			<a href="#" className="list-button start">Start</a>
-			<div className="heading">Landkreis</div>
-			<div className="description">wähle deinen Landkreis</div>
+			<Header title="Deutschland" subtitle="w&auml;hle dein Bundesland" hideStart={true} />
+			<div className="list">
+				<StatesList />
+			</div>
 		</div>
 	);
 }
@@ -170,7 +169,7 @@ function renderDistricts(State, JSONresponse) {
 	}
 	return (
 		<div>
-			<DistrictsHeader />
+			<Header title={statesList.data[State].name} subtitle="wähle deinen Landkreis" />
 			<div className="list">
 				{out}
 			</div>
@@ -210,9 +209,6 @@ function renderAGS(AGS, JSONresponse) {
 	const len = JSONresponse["data"][AGS]["history"].length;
 	var out = "";
 	out += `
-			<a href="#" class="list-button start">Start</a>
-			<div class="district">${JSONresponse["data"][AGS]["name"]}</div>
-			<div class="description">7-Tage-Inzidenzen der letzten f&uuml;nf Tage</div>
 			<div class="top5">
 				<div class="date">${formatDate(JSONresponse["data"][AGS]["history"][len-1]["date"].substr(0,10))}</div>
 				<div class="incidence">${JSONresponse["data"][AGS]["history"][len-1]["weekIncidence"].toFixed(1)}</div>
@@ -239,7 +235,12 @@ function renderAGS(AGS, JSONresponse) {
 	out += `
 			</div>
 	`;
-	return out;
+	return (
+		<div>
+			<Header title={JSONresponse["data"][AGS]["name"]} subtitle="7-Tage-Inzidenzen der letzten f&uuml;nf Tage" />
+			<div dangerouslySetInnerHTML={{__html: out}} />
+		</div>
+	);
 }
 
 class AGS extends React.Component {
@@ -265,7 +266,7 @@ class AGS extends React.Component {
 		}
 		try {
 			return (
-				<div dangerouslySetInnerHTML={{__html: renderAGS(this.state.ags, this.state.response)}} />
+				renderAGS(this.state.ags, this.state.response)
 			);
 		} catch (e) {
 			return <Redirect to="/" />;
@@ -276,7 +277,7 @@ class AGS extends React.Component {
 function Footer() {
 	return (
 		<footer>
-			<span>Datenquelle: RKI (siehe GitHub: <a class="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK" rel="noreferrer">rki-covid-api</a>)</span><br />
+			<span>Datenquelle: RKI (siehe GitHub: <a className="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK" rel="noreferrer">rki-covid-api</a>)</span><br />
 			<span>Alle Angaben ohne Gew&auml;hr.</span>
 		</footer>
 	);
