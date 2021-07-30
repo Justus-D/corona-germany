@@ -10,65 +10,12 @@ import {
 } from "react-router-dom";
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import React from 'react';
+//import ErrorBoundary from './ErrorBoundary';
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
 const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
-
-function Loading() {
-	return (
-		<Header title="Laden..." />
-	);
-}
-
-function ListItem(props) {
-	return (
-		<div className="list-item">
-			<Link to={props.link} className="list-button">
-				{props.name}
-			</Link>
-		</div>
-	);
-}
-
-
-function StatesList() {
-	const statesJSON = statesList;
-	var out = [];
-	const states = Object.keys(statesJSON["data"]);
-	var key;
-	for (var i = 0; i < states.length; i++) {
-		key = states[i];
-		out.push(
-			<ListItem link={'state/'+key} name={statesJSON["data"][key]["name"]} />
-		);
-	}
-	return out;
-}
-
-function Header(props) {
-	return (
-		<div>
-			{props.hideStart ? null : <a href="#" className="list-button start">Start</a>}
-			<div className="heading">{props.title}</div>
-			{props.subtitle ? <div className="description">{props.subtitle}</div> : null}
-		</div>
-	);
-}
-
-function States() {
-	return (
-		<div>
-			<Header title="Deutschland" subtitle="w&auml;hle dein Bundesland" hideStart={true} />
-			<div className="list">
-				<StatesList />
-			</div>
-		</div>
-	);
-}
-
-function renderDistricts(State, JSONresponse) {
-	const zusaetze = JSON.parse(`
+const zusaetze = JSON.parse(`
 	{
 		"0000":"Zusatz",
 		"08121":"SK",
@@ -134,7 +81,70 @@ function renderDistricts(State, JSONresponse) {
 		"16055":2,
 		"16071":2
 	}
-	`);
+`);
+
+function Loading() {
+	return (
+		<Header title="Laden..." />
+	);
+}
+
+function Fehler() {
+	return (
+		<div>
+			<h2>Ein Fehler ist aufgetreten.</h2>
+			<p>Erfahrungsgem&auml;&szlig; ist der Fehler in wenigen Stunden wieder behoben. Meist liegt der Fehler bei der RKI-API.</p>
+		</div>
+	);
+}
+
+function ListItem(props) {
+	return (
+		<div className="list-item">
+			<Link to={props.link} className="list-button">
+				{props.name}
+			</Link>
+		</div>
+	);
+}
+
+
+function StatesList() {
+	const statesJSON = statesList;
+	var out = [];
+	const states = Object.keys(statesJSON["data"]);
+	var key;
+	for (var i = 0; i < states.length; i++) {
+		key = states[i];
+		out.push(
+			<ListItem link={'state/'+key} name={statesJSON["data"][key]["name"]} />
+		);
+	}
+	return out;
+}
+
+function Header(props) {
+	return (
+		<div>
+			{props.hideStart ? null : <a href="#" className="list-button start">Start</a>}
+			<div className="heading">{props.title}</div>
+			{props.subtitle ? <div className="description">{props.subtitle}</div> : null}
+		</div>
+	);
+}
+
+function States() {
+	return (
+		<div>
+			<Header title="Deutschland" subtitle="w&auml;hle dein Bundesland" hideStart={true} />
+			<div className="list">
+				<StatesList />
+			</div>
+		</div>
+	);
+}
+
+function renderDistricts(State, JSONresponse) {
 	var districtsArr = [];
 	var districts = Object.keys(JSONresponse["data"]);
 	for (var h = 0; h < districts.length; h++) { // Aus den Objekten Name und AGS in ein Array packen
@@ -187,10 +197,11 @@ class State extends React.Component {
 		};
 	}
 	componentDidMount() {
-		fetch(API_URL + '/districts')
+		fetch(/*API_URL + */'/incidence/districts_Snapshot_2021-07-30.json')
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
 		;
+		// this.setState({response: districtsSnapshot, loading: false});
 	}
 	render() {
 		if (this.state.loading) {
@@ -198,47 +209,63 @@ class State extends React.Component {
 				<Loading />
 			);
 		}
-		return renderDistricts(this.state.stateKey, this.state.response);
+		try {
+			return renderDistricts(this.state.stateKey, this.state.response);
+		} catch (e) {
+			return <Redirect to="/" />;
+		}
 	}
 }
 function formatDate(date) {
-	var a = date.split("-");
+	let a = date.split("-");
 	return a[2]+"."+a[1]+"."+a[0];
 }
-function renderAGS(AGS, JSONresponse) {
-	const len = JSONresponse["data"][AGS]["history"].length;
-	var out = "";
-	out += `
-			<div class="top5">
-				<div class="date">${formatDate(JSONresponse["data"][AGS]["history"][len-1]["date"].substr(0,10))}</div>
-				<div class="incidence">${JSONresponse["data"][AGS]["history"][len-1]["weekIncidence"].toFixed(1)}</div>
-				<div class="date">${formatDate(JSONresponse["data"][AGS]["history"][len-2]["date"].substr(0,10))}</div>
-				<div class="incidence">${JSONresponse["data"][AGS]["history"][len-2]["weekIncidence"].toFixed(1)}</div>
-				<div class="date">${formatDate(JSONresponse["data"][AGS]["history"][len-3]["date"].substr(0,10))}</div>
-				<div class="incidence">${JSONresponse["data"][AGS]["history"][len-3]["weekIncidence"].toFixed(1)}</div>
-				<div class="date date-dim">${formatDate(JSONresponse["data"][AGS]["history"][len-4]["date"].substr(0,10))}</div>
-				<div class="incidence incidence-dim">${JSONresponse["data"][AGS]["history"][len-4]["weekIncidence"].toFixed(1)}</div>
-				<div class="date date-dim">${formatDate(JSONresponse["data"][AGS]["history"][len-5]["date"].substr(0,10))}</div>
-				<div class="incidence incidence-dim">${JSONresponse["data"][AGS]["history"][len-5]["weekIncidence"].toFixed(1)}</div>
-			</div>
-			<div class="show-table"><button class="list-button" onclick="document.getElementById('table').hidden = false; this.remove();">Alle Werte anzeigen</button></div>
-			<div id="table" hidden>
-	`;
-	for (var i = len - 1-5; i >= 0; i--) {
-		out += `
-				<div class="table-item">
-					${formatDate(JSONresponse["data"][AGS]["history"][i]["date"].substr(0,10))}:&nbsp;
-					${JSONresponse["data"][AGS]["history"][i]["weekIncidence"].toFixed(1)}
-				</div>
-		`;
+function RenderAGS(props) {
+	const AGS = props.AGS;
+	const JSONresponse = props.JSONresponse;
+
+	var len;
+	try {
+		len = JSONresponse["data"][AGS]["history"].length;
+	} catch (e) {
+		return <Fehler />;
 	}
-	out += `
+	let top5 = (
+		<div className="top5">
+			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-1]["date"].substr(0,10))}</div>
+			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-1]["weekIncidence"].toFixed(1)}</div>
+			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-2]["date"].substr(0,10))}</div>
+			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-2]["weekIncidence"].toFixed(1)}</div>
+			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-3]["date"].substr(0,10))}</div>
+			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-3]["weekIncidence"].toFixed(1)}</div>
+			<div className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-4]["date"].substr(0,10))}</div>
+			<div className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-4]["weekIncidence"].toFixed(1)}</div>
+			<div className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-5]["date"].substr(0,10))}</div>
+			<div className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-5]["weekIncidence"].toFixed(1)}</div>
+		</div>
+	);
+
+	let tableData = [];
+	for (var i = len - 1-5; i >= 0; i--) {
+		tableData.push(
+			<div className="table-item">
+				{formatDate(JSONresponse["data"][AGS]["history"][i]["date"].substr(0,10))}:&nbsp;
+				{JSONresponse["data"][AGS]["history"][i]["weekIncidence"].toFixed(1)}
 			</div>
-	`;
+		);
+	}
+	let table = (
+		<div>
+			<div className="show-table"><button id="list-button" className="list-button" onClick={() => {document.getElementById('table').hidden = false; document.getElementById("list-button").remove();}}>Alle Werte anzeigen</button></div>
+			<div id="table" hidden>{tableData}</div>
+		</div>
+	);
+
 	return (
 		<div>
 			<Header title={JSONresponse["data"][AGS]["name"]} subtitle="7-Tage-Inzidenzen der letzten f&uuml;nf Tage" />
-			<div dangerouslySetInnerHTML={{__html: out}} />
+			{top5}
+			{table}
 		</div>
 	);
 }
@@ -248,14 +275,19 @@ class AGS extends React.Component {
 		super(props);
 		this.state = {
 			loading: true,
+			error: false,
 			ags: this.props.match.params.ags,
 			response: null
 		};
 	}
 	componentDidMount() {
+		var that = this;
 		fetch(API_URL+"/districts/"+this.state.ags+"/history/incidence")
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
+			.catch(function(e) {
+				that.setState({error: true, loading: false})
+			})
 		;
 	}
 	render() {
@@ -264,9 +296,12 @@ class AGS extends React.Component {
 				<Loading />
 			);
 		}
+		if (this.state.error) {
+			return <Fehler />;
+		}
 		try {
 			return (
-				renderAGS(this.state.ags, this.state.response)
+				<RenderAGS AGS={this.state.ags} JSONresponse={this.state.response} />
 			);
 		} catch (e) {
 			return <Redirect to="/" />;
