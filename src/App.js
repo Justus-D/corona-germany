@@ -92,7 +92,7 @@ function Loading() {
 function Fehler() {
 	return (
 		<div>
-			<h2>Ein Fehler ist aufgetreten.</h2>
+			<Header title="Ein Fehler ist aufgetreten" />
 			<p>Erfahrungsgem&auml;&szlig; ist der Fehler in wenigen Stunden wieder behoben. Meist liegt der Fehler bei der RKI-API.</p>
 		</div>
 	);
@@ -101,7 +101,7 @@ function Fehler() {
 function ListItem(props) {
 	return (
 		<div className="list-item">
-			<Link to={props.link} className="list-button">
+			<Link to={props.link} className="list-button" key={props.itemKey}>
 				{props.name}
 			</Link>
 		</div>
@@ -117,7 +117,7 @@ function StatesList() {
 	for (var i = 0; i < states.length; i++) {
 		key = states[i];
 		out.push(
-			<ListItem link={'state/'+key} name={statesJSON["data"][key]["name"]} />
+			<ListItem link={'state/'+key} name={statesJSON["data"][key]["name"]} key={key} itemKey={key} />
 		);
 	}
 	return out;
@@ -126,7 +126,7 @@ function StatesList() {
 function Header(props) {
 	return (
 		<div>
-			{props.hideStart ? null : <a href="#" className="list-button start">Start</a>}
+			{props.hideStart ? null : <Link to="/" className="list-button start">Start</Link>}
 			<div className="heading">{props.title}</div>
 			{props.subtitle ? <div className="description">{props.subtitle}</div> : null}
 		</div>
@@ -175,7 +175,7 @@ function renderDistricts(State, JSONresponse) {
 		let htmlStr = `
 			<a class="list-button" href="#${districtsArr[m].ags}">${districtsArr[m].name}${zusatz}</a>
 		`; // Vielleicht später nochmal in JSX umschreiben...
-		out.push(<div className="list-item" dangerouslySetInnerHTML={{__html: htmlStr}}></div>);
+		out.push(<div key={districtsArr[m].ags} className="list-item" dangerouslySetInnerHTML={{__html: htmlStr}}></div>);
 	}
 	return (
 		<div>
@@ -232,23 +232,23 @@ function RenderAGS(props) {
 	}
 	let top5 = (
 		<div className="top5">
-			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-1]["date"].substr(0,10))}</div>
-			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-1]["weekIncidence"].toFixed(1)}</div>
-			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-2]["date"].substr(0,10))}</div>
-			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-2]["weekIncidence"].toFixed(1)}</div>
-			<div className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-3]["date"].substr(0,10))}</div>
-			<div className="incidence">{JSONresponse["data"][AGS]["history"][len-3]["weekIncidence"].toFixed(1)}</div>
-			<div className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-4]["date"].substr(0,10))}</div>
-			<div className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-4]["weekIncidence"].toFixed(1)}</div>
-			<div className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-5]["date"].substr(0,10))}</div>
-			<div className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-5]["weekIncidence"].toFixed(1)}</div>
+			<div key="d1" className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-1]["date"].substr(0,10))}</div>
+			<div key="i1" className="incidence">{JSONresponse["data"][AGS]["history"][len-1]["weekIncidence"].toFixed(1)}</div>
+			<div key="d2" className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-2]["date"].substr(0,10))}</div>
+			<div key="i2" className="incidence">{JSONresponse["data"][AGS]["history"][len-2]["weekIncidence"].toFixed(1)}</div>
+			<div key="d3" className="date">{formatDate(JSONresponse["data"][AGS]["history"][len-3]["date"].substr(0,10))}</div>
+			<div key="i3" className="incidence">{JSONresponse["data"][AGS]["history"][len-3]["weekIncidence"].toFixed(1)}</div>
+			<div key="d4" className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-4]["date"].substr(0,10))}</div>
+			<div key="i4" className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-4]["weekIncidence"].toFixed(1)}</div>
+			<div key="d5" className="date date-dim">{formatDate(JSONresponse["data"][AGS]["history"][len-5]["date"].substr(0,10))}</div>
+			<div key="i5" className="incidence incidence-dim">{JSONresponse["data"][AGS]["history"][len-5]["weekIncidence"].toFixed(1)}</div>
 		</div>
 	);
 
 	let tableData = [];
 	for (var i = len - 1-5; i >= 0; i--) {
 		tableData.push(
-			<div className="table-item">
+			<div className="table-item" key={JSONresponse["data"][AGS]["history"][i]["date"].substr(0,10)}>
 				{formatDate(JSONresponse["data"][AGS]["history"][i]["date"].substr(0,10))}:&nbsp;
 				{JSONresponse["data"][AGS]["history"][i]["weekIncidence"].toFixed(1)}
 			</div>
