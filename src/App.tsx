@@ -9,7 +9,9 @@ import {
 	Redirect
 } from "react-router-dom";
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import React from 'react';
+import React/*, { DetailedReactHTMLElement }*/ from 'react';
+// import { ReactElement } from 'react';
+// import { ReactHTMLElement } from 'react';
 //import ErrorBoundary from './ErrorBoundary';
 
 const API_URL = "https://corona-germany-api.justus-d.de";
@@ -98,7 +100,7 @@ function Fehler() {
 	);
 }
 
-function ListItem(props) {
+function ListItem(props: any): JSX.Element {
 	return (
 		<div className="list-item">
 			<Link to={props.link} className="list-button" key={props.itemKey}>
@@ -109,9 +111,9 @@ function ListItem(props) {
 }
 
 
-function StatesList() {
+function StatesList(): JSX.Element {
 	const statesJSON = statesList;
-	var out = [];
+	var out: any = [];
 	const states = Object.keys(statesJSON["data"]);
 	var key;
 	for (var i = 0; i < states.length; i++) {
@@ -123,7 +125,7 @@ function StatesList() {
 	return out;
 }
 
-function Header(props) {
+function Header(props: any) {
 	return (
 		<div>
 			{props.hideStart ? null : <Link to="/" className="list-button start">Start</Link>}
@@ -144,7 +146,7 @@ function States() {
 	);
 }
 
-function renderDistricts(State, JSONresponse) {
+function renderDistricts(State: string, JSONresponse: any) {
 	var districtsArr = [];
 	var districts = Object.keys(JSONresponse["data"]);
 	for (var h = 0; h < districts.length; h++) { // Aus den Objekten Name und AGS in ein Array packen
@@ -156,7 +158,7 @@ function renderDistricts(State, JSONresponse) {
 	for (var i = districtsArr.length-1; i > 0; i--) { // Array alphabetisch sortieren
 		for (var j = 0; j < i; j++) {
 			if (districtsArr[j].name.localeCompare(districtsArr[j+1].name, "de-DE") === 1) {
-				var temp = districtsArr[j];
+				var temp: any = districtsArr[j];
 				districtsArr[j] = districtsArr[j+1];
 				districtsArr[j+1] = temp;
 			}
@@ -188,8 +190,15 @@ function renderDistricts(State, JSONresponse) {
 }
 
 class State extends React.Component {
-	constructor(props) {
+	state: {
+		loading: boolean,
+		stateKey: string,
+		response: any
+	};
+	props: any;
+	constructor(props: any) {
 		super(props);
+		this.props = props;
 		this.state = {
 			loading: true,
 			stateKey: this.props.match.params.stateKey,
@@ -216,15 +225,15 @@ class State extends React.Component {
 		}
 	}
 }
-function formatDate(date) {
+function formatDate(date: string): string {
 	let a = date.split("-");
 	return a[2]+"."+a[1]+"."+a[0];
 }
-function RenderAGS(props) {
-	const AGS = props.AGS;
-	const JSONresponse = props.JSONresponse;
+function RenderAGS(props: any) {
+	const AGS: string = props.AGS;
+	const JSONresponse: any = props.JSONresponse;
 
-	var len;
+	var len: number;
 	try {
 		len = JSONresponse["data"][AGS]["history"].length;
 	} catch (e) {
@@ -256,12 +265,14 @@ function RenderAGS(props) {
 	}
 	let table = (
 		<div>
-			<div className="show-table"><button id="list-button" className="list-button" onClick={() => {document.getElementById('table').hidden = false; document.getElementById("list-button").remove();}}>Alle Werte anzeigen</button></div>
+			<div className="show-table" dangerouslySetInnerHTML={{__html: `<button class="list-button" onclick="document.getElementById('table').hidden = false; this.remove();">Alle Werte anzeigen</button>`}} />
 			<div id="table" hidden>{tableData}</div>
 		</div>
 	);
 
-	return (
+/*<button id="list-button" className="list-button" onClick={() => { document.getElementById('table').hidden = false; document.getElementById("list-button").remove(); }}>Alle Werte anzeigen</button>*/
+
+return (
 		<div>
 			<Header title={JSONresponse["data"][AGS]["name"]} subtitle="7-Tage-Inzidenzen der letzten f&uuml;nf Tage" />
 			{top5}
@@ -271,8 +282,16 @@ function RenderAGS(props) {
 }
 
 class AGS extends React.Component {
-	constructor(props) {
+	props: any;
+	state: {
+		loading: boolean,
+		error: boolean,
+		ags: string,
+		response: any
+	};
+	constructor(props: any) {
 		super(props);
+		this.props = props;
 		this.state = {
 			loading: true,
 			error: false,
