@@ -266,7 +266,7 @@ function RenderAGS(props: any) {
 
 /*<button id="list-button" className="list-button" onClick={() => { document.getElementById('table').hidden = false; document.getElementById("list-button").remove(); }}>Alle Werte anzeigen</button>*/
 
-return (
+	return (
 		<div>
 			<Header title={JSONresponse["data"][AGS]["name"]} subtitle="7-Tage-Inzidenzen der letzten f&uuml;nf Tage" />
 			{top5}
