@@ -1,6 +1,6 @@
 {
-  "name": "corona-germany-incidence",
-  "version": "0.2.0",
+  "name": "corona-germany",
+  "version": "0.3.0",
   "homepage": "/",
   "private": true,
   "dependencies": {
