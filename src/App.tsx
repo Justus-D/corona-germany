@@ -326,11 +326,6 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route path="/test/">
-					<div className="wrapper">
-						<Header title="Test" subtitle="Mal sehen..." hideStart />
-					</div>
-				</Route>
 				<Route path="/incidence/">
 					<HashRouter hashType="noslash">
 						<div className="wrapper">
