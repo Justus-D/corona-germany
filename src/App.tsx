@@ -1,7 +1,7 @@
 // import './App.css';
 
 import {
-	//BrowserRouter as Router,
+	BrowserRouter as Router,
 	HashRouter,
 	Switch,
 	Route,
@@ -13,6 +13,10 @@ import React/*, { DetailedReactHTMLElement }*/ from 'react';
 // import { ReactElement } from 'react';
 // import { ReactHTMLElement } from 'react';
 //import ErrorBoundary from './ErrorBoundary';
+
+// Components
+import Header from './components/Header';
+import Footer from "./components/Footer";
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -125,16 +129,6 @@ function StatesList(): JSX.Element {
 	return out;
 }
 
-function Header(props: any) {
-	return (
-		<div>
-			{props.hideStart ? null : <Link to="/" className="list-button start">Start</Link>}
-			<div className="heading">{props.title}</div>
-			{props.subtitle ? <div className="description">{props.subtitle}</div> : null}
-		</div>
-	);
-}
-
 function States() {
 	return (
 		<div>
@@ -206,7 +200,7 @@ class State extends React.Component {
 		};
 	}
 	componentDidMount() {
-		fetch(/*API_URL + */'/incidence/districts_Snapshot_2021-07-30.json')
+		fetch(/*API_URL + */'/districts_Snapshot_2021-07-30.json')
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
 		;
@@ -328,29 +322,34 @@ class AGS extends React.Component {
 	}
 }
 
-function Footer() {
-	return (
-		<footer>
-			<span>Datenquelle: RKI (siehe GitHub: <a className="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK" rel="noreferrer">rki-covid-api</a>)</span><br />
-			<span>Alle Angaben ohne Gew&auml;hr.</span>
-		</footer>
-	);
-}
-
 function App() {
 	return (
-		<HashRouter hashType="noslash">
-			<div className="wrapper">
-				<Switch>
-					<Route exact path="/">
-						<States />
-					</Route>
-					<Route path="/state/:stateKey" component={State} />
-					<Route path="/:ags" component={AGS} />
-				</Switch>
-			</div>
-			<Footer />
-		</HashRouter>
+		<Router>
+			<Switch>
+				<Route path="/test/">
+					<div className="wrapper">
+						<Header title="Test" subtitle="Mal sehen..." hideStart />
+					</div>
+				</Route>
+				<Route path="/incidence/">
+					<HashRouter hashType="noslash">
+						<div className="wrapper">
+							<Switch>
+								<Route exact path="/">
+									<States />
+								</Route>
+								<Route path="/state/:stateKey" component={State} />
+								<Route path="/:ags" component={AGS} />
+							</Switch>
+						</div>
+						<Footer />
+					</HashRouter>
+				</Route>
+				<Route path="/">
+					<Redirect to="/incidence/" />
+				</Route>
+			</Switch>
+		</Router>
 	);
 }
 
