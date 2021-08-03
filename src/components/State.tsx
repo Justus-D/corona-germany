@@ -73,6 +73,24 @@ const zusaetze = JSON.parse(`
 	}
 `);
 
+export function zusatz(district: any, onlyZusatz?: boolean) {
+	var zusatz = "";
+	var zusatzStr = "";
+	if (zusaetze[district.ags]) {
+		if (zusaetze[district.ags] === 2) {
+			zusatzStr = district.county.substr(0, zusaetze[district.ags]);
+			zusatz = ' <span style="color: #727272;">('+zusatzStr+")</span>";
+		} else {
+			zusatzStr = zusaetze[district.ags];
+			zusatz = ' <span style="color: #727272;">('+zusatzStr+")</span>";
+		}
+	}
+	if (onlyZusatz) {
+		return zusatzStr;
+	}
+	return district.name+zusatz;
+}
+
 export default class State extends React.Component {
 	state: {
 		loading: boolean,
@@ -130,16 +148,16 @@ function renderDistricts(State: string, JSONresponse: any) {
 	}
 	var out = [];
 	for (var m = 0; m < districtsArr.length; m++) {
-		var zusatz = "";
-		if (zusaetze[districtsArr[m].ags]) {
-			if (zusaetze[districtsArr[m].ags] === 2) {
-				zusatz = ' <span style="color: #727272;">('+districtsArr[m].county.substr(0, zusaetze[districtsArr[m].ags])+")</span>";
-			} else {
-				zusatz = ' <span style="color: #727272;">('+zusaetze[districtsArr[m].ags]+")</span>";
-			}
-		}
+		// var zusatz = "";
+		// if (zusaetze[districtsArr[m].ags]) {
+		// 	if (zusaetze[districtsArr[m].ags] === 2) {
+		// 		zusatz = ' <span style="color: #727272;">('+districtsArr[m].county.substr(0, zusaetze[districtsArr[m].ags])+")</span>";
+		// 	} else {
+		// 		zusatz = ' <span style="color: #727272;">('+zusaetze[districtsArr[m].ags]+")</span>";
+		// 	}
+		// }
 		let htmlStr = `
-			<a class="list-button" href="#${districtsArr[m].ags}">${districtsArr[m].name}${zusatz}</a>
+			<a class="list-button" href="#${districtsArr[m].ags}">${zusatz(districtsArr[m])}</a>
 		`; // Vielleicht später nochmal in JSX umschreiben...
 		out.push(<div key={districtsArr[m].ags} className="list-item" dangerouslySetInnerHTML={{__html: htmlStr}}></div>);
 	}

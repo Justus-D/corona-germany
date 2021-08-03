@@ -22,6 +22,7 @@ import Footer from "./components/Footer";
 import States from "./components/States";
 import State from "./components/State";
 import AGS from "./components/AGS";
+import Top from "./components/Top";
 
 function App() {
 	return (
@@ -35,6 +36,7 @@ function App() {
 									<States />
 								</Route>
 								<Route path="/state/:stateKey" component={State} />
+								<Route path="/top" component={Top} />
 								<Route path="/:ags" component={AGS} />
 							</Switch>
 						</div>

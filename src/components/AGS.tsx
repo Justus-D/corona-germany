@@ -4,10 +4,11 @@ import { Redirect } from 'react-router-dom';
 import Header from './Header';
 import Loading from "./Loading";
 import Fehler from "./Fehler";
+import { zusatz } from './State';
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
-function formatDate(date: string): string {
+export function formatDate(date: string): string {
 	let a = date.split("-");
 	return a[2]+"."+a[1]+"."+a[0];
 }
@@ -93,17 +94,13 @@ export default class AGS extends React.Component {
 	}
 	render() {
 		if (this.state.loading) {
-			return (
-				<Loading />
-			);
+			return <Loading />;
 		}
 		if (this.state.error) {
 			return <Fehler />;
 		}
 		try {
-			return (
-				<RenderAGS AGS={this.state.ags} JSONresponse={this.state.response} />
-			);
+			return <RenderAGS AGS={this.state.ags} JSONresponse={this.state.response} />;
 		} catch (e) {
 			return <Redirect to="/" />;
 		}
