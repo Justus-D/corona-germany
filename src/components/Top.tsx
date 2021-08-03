@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Online, Offline } from "react-detect-offline";
 
 import Header from "./Header";
 import Loading from "./Loading";
 import Fehler from "./Fehler";
 import { formatDate } from "./AGS";
 import { zusatz } from "./State";
+import BistOffline from "./BistOffline";
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -14,6 +16,7 @@ export default class Top extends React.Component {
 	state: {
 		loading: boolean,
 		error: boolean,
+		online: boolean,
 		response: any
 	};
 	constructor(props: any) {
@@ -22,6 +25,7 @@ export default class Top extends React.Component {
 		this.state = {
 			loading: true,
 			error: false,
+			online: navigator.onLine,
 			response: null
 		};
 	}
@@ -30,8 +34,8 @@ export default class Top extends React.Component {
 		fetch(API_URL+"/districts")
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
-			.catch(function(e) {
-				that.setState({error: true, loading: false})
+			.catch(function(error) {
+				that.setState({error: true, loading: false, online: navigator.onLine});
 			})
 		;
 	}	
@@ -40,6 +44,9 @@ export default class Top extends React.Component {
 			return <Loading />;
 		}
 		if (this.state.error) {
+			if (!this.state.online) {
+				return <BistOffline />;
+			}
 			return <Fehler />;
 		}
 		const dis = this.state.response["data"];

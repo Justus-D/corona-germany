@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Header from './Header';
 import Loading from "./Loading";
 import Fehler from "./Fehler";
-import { zusatz } from './State';
+import BistOffline from './BistOffline';
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -69,6 +69,7 @@ export default class AGS extends React.Component {
 	state: {
 		loading: boolean,
 		error: boolean,
+		online: boolean,
 		ags: string,
 		response: any
 	};
@@ -78,6 +79,7 @@ export default class AGS extends React.Component {
 		this.state = {
 			loading: true,
 			error: false,
+			online: navigator.onLine,
 			ags: this.props.match.params.ags,
 			response: null
 		};
@@ -88,7 +90,7 @@ export default class AGS extends React.Component {
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
 			.catch(function(e) {
-				that.setState({error: true, loading: false})
+				that.setState({error: true, loading: false, online: navigator.onLine})
 			})
 		;
 	}
@@ -97,6 +99,9 @@ export default class AGS extends React.Component {
 			return <Loading />;
 		}
 		if (this.state.error) {
+			if (!this.state.online) {
+				return <BistOffline />;
+			}
 			return <Fehler />;
 		}
 		try {
