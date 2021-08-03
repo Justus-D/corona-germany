@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Online, Offline } from "react-detect-offline";
 
 import Header from "./Header";
 import Loading from "./Loading";
