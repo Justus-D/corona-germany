@@ -20,8 +20,60 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "/?utm_source=homescreen",
   "display": "standalone",
   "theme_color": "#222222",
-  "background_color": "#222222"
+  "background_color": "#222222",
+  "shortcuts": [
+    {
+      "name": "Inzidenzen-Übersicht öffnen",
+      "short_name": "Inzidenzen",
+      "description": "Zur Auswahl der Bundesländer",
+      "url": "/incidence/?utm_source=homescreen_shortcut",
+      "icons": [
+        {
+          "src": "favicon.ico",
+          "sizes": "64x64 32x32 24x24 16x16",
+          "type": "image/x-icon"
+        },
+        {
+          "src": "logo192.png",
+          "type": "image/png",
+          "sizes": "192x192",
+          "purpose": "any maskable"
+        },
+        {
+          "src": "logo512.png",
+          "type": "image/png",
+          "sizes": "512x512",
+          "purpose": "any maskable"
+        }
+      ]
+    },
+    {
+      "name": "Top Inzidenzen öffnen",
+      "short_name": "Top Inzidenzen",
+      "description": "Eine Liste der Kreise mit den höchsten Inzidenzen öffnen",
+      "url": "/incidence/?utm_source=homescreen_shortcut#top",
+      "icons": [
+        {
+          "src": "favicon.ico",
+          "sizes": "64x64 32x32 24x24 16x16",
+          "type": "image/x-icon"
+        },
+        {
+          "src": "logo192.png",
+          "type": "image/png",
+          "sizes": "192x192",
+          "purpose": "any maskable"
+        },
+        {
+          "src": "logo512.png",
+          "type": "image/png",
+          "sizes": "512x512",
+          "purpose": "any maskable"
+        }
+      ]
+    }
+  ]
 }
