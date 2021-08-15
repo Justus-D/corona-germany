@@ -1,6 +1,7 @@
 {
   "short_name": "Corona Inzidenzen",
   "name": "Corona 7-Tage-Inzidenz der letzten Tage",
+  "description": "Diese Seite mit aktuellen Corona-Zahlen kannst du auch direkt als App zu deinem Startbildschirm hinzufügen. Erfahrungsgemäß liegt die Installationsgröße unter 1 MB.",
   "icons": [
     {
       "src": "favicon.ico",
