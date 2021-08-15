@@ -75,5 +75,27 @@
         }
       ]
     }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshots/screenshot-start.png",
+      "sizes": "752x1336",
+      "type": "image/png"
+    },
+    {
+      "src": "images/screenshots/screenshot-state.png",
+      "sizes": "752x1336",
+      "type": "image/png"
+    },
+    {
+      "src": "images/screenshots/screenshot-district.png",
+      "sizes": "752x1336",
+      "type": "image/png"
+    },
+    {
+      "src": "images/screenshots/screenshot-top.png",
+      "sizes": "752x1336",
+      "type": "image/png"
+    }
   ]
 }
