@@ -35,6 +35,7 @@ function App() {
 								<Route exact path="/">
 									<States />
 								</Route>
+								<Route path="/state/:stateKey/all" component={AGS} />
 								<Route path="/state/:stateKey" component={State} />
 								<Route path="/top" component={Top} />
 								<Route path="/:ags" component={AGS} />

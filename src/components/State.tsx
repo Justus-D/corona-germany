@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 
 import Header from "./Header";
 import Loading from "./Loading";
+import { ListItem } from "./States";
 
 const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
 const zusaetze = JSON.parse(`
@@ -164,6 +165,9 @@ function renderDistricts(State: string, JSONresponse: any) {
 	return (
 		<div>
 			<Header title={statesList.data[State].name} subtitle="wähle deinen Landkreis" />
+			<div className="list">
+				<ListItem link={'/state/'+State+'/all'} name={`Inzidenzen für ganz ${statesList.data[State].name}`} key="all" itemKey="all" />
+			</div>
 			<div className="list">
 				{out}
 			</div>
