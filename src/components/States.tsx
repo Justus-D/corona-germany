@@ -6,11 +6,19 @@ import { API_URL } from '../App';
 
 const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
 
-export function ListItem(props: any): JSX.Element {
+export function ListItem(props: {
+		link: string,
+		name: string,
+		itemKey: string,
+		incidence?: string | number,
+		zusatz?: string
+	}): JSX.Element {
 	return (
 		<div className="list-item">
 			<Link to={props.link} className="list-button" key={props.itemKey}>
-				{props.name}{props.incidence ? <span style={{color: "#727272"}}>{" - " + props.incidence}</span> : null}
+				{props.name}
+				{props.zusatz ? <span style={{color: "#727272"}}>{` (${props.zusatz})`}</span> : null}
+				{props.incidence ? <span style={{color: "#727272"}}>{" - " + props.incidence}</span> : null}
 			</Link>
 		</div>
 	);

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 
 import Header from "./Header";
 import Loading from "./Loading";
 import { ListItem } from "./States";
+import { API_URL } from "../App";
 
 const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
 const zusaetze = JSON.parse(`
@@ -122,14 +123,27 @@ export default class State extends React.Component {
 			);
 		}
 		try {
-			return renderDistricts(this.state.stateKey, this.state.response);
+			return <RenderDistricts State={this.state.stateKey} JSONresponse={this.state.response} />
 		} catch (e) {
 			return <Redirect to="/" />;
 		}
 	}
 }
 
-function renderDistricts(State: string, JSONresponse: any) {
+function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Element {
+	const State = props.State
+	const JSONresponse = props.JSONresponse
+
+	const [districtsIncidences, setDistrictIncidences] = useState<any>(null);
+
+	useEffect(() => {
+		fetch(`${API_URL}/districts`)
+			.then(r => r.json())
+			.then(data => setDistrictIncidences(data))
+			.catch(()=>{})
+		;
+	}, [])
+
 	var districtsArr = [];
 	var districts = Object.keys(JSONresponse["data"]);
 	for (var h = 0; h < districts.length; h++) { // Aus den Objekten Name und AGS in ein Array packen
@@ -149,10 +163,19 @@ function renderDistricts(State: string, JSONresponse: any) {
 	}
 	var out = [];
 	for (var m = 0; m < districtsArr.length; m++) {
-		let htmlStr = `
-			<a class="list-button" href="#${districtsArr[m].ags}">${zusatz(districtsArr[m])}</a>
-		`; // Vielleicht später nochmal in JSX umschreiben...
-		out.push(<div key={districtsArr[m].ags} className="list-item" dangerouslySetInnerHTML={{__html: htmlStr}}></div>);
+		let incidence = null
+		if (districtsIncidences) {
+			incidence = districtsIncidences["data"][districtsArr[m].ags]["weekIncidence"].toFixed(1);
+		}
+
+		out.push(<ListItem
+			key={districtsArr[m].ags}
+			itemKey={districtsArr[m].ags}
+			name={districtsArr[m].name}
+			link={districtsArr[m].ags}
+			zusatz={zusatz(districtsArr[m], true)}
+			incidence={incidence}
+		/>)
 	}
 	return (
 		<div>
