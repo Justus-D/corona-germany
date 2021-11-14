@@ -11,7 +11,8 @@ export function ListItem(props: {
 		name: string,
 		itemKey: string,
 		incidence?: string | number,
-		zusatz?: string
+		zusatz?: string,
+		trend?: null | "up" | "down"
 	}): JSX.Element {
 	return (
 		<div className="list-item">
@@ -19,15 +20,61 @@ export function ListItem(props: {
 				{props.name}
 				{props.zusatz ? <span style={{color: "#727272"}}>{` (${props.zusatz})`}</span> : null}
 				{props.incidence ? <span style={{color: "#727272"}}>{" - " + props.incidence}</span> : null}
+				{props.trend ? (() => {
+					if (props.trend === "up") {
+						return <span style={{color: "#727272", fontSize: "13px"}}> ↗</span> // 📈
+					}
+					if (props.trend === "down") {
+						return <span style={{color: "#727272", fontSize: "13px"}}> ↘</span> // 📉
+					}
+					return null
+				})() : null}
 			</Link>
 		</div>
 	);
 }
 
+function StateListItem(props: { idKey: string, name: string, incidence?: string | number }): JSX.Element {
+
+	const [stateIncidences, setStateIncidences] = useState<any>(null);
+	useEffect(() => {
+		fetch(`${API_URL}/states/${props.idKey}/history/incidence/2`)
+			.then(r => r.json())
+			.then(data => setStateIncidences(data))
+			.catch(()=>{})
+		;
+	}, [props.idKey])
+
+	let trend: null | "up" | "down" = null
+	if (stateIncidences) {
+		try {
+			const historyArray = stateIncidences["data"][props.idKey]["history"]
+			if (historyArray[1].weekIncidence > historyArray[0].weekIncidence) {
+				trend = "up"
+			}
+			if (historyArray[1].weekIncidence < historyArray[0].weekIncidence) {
+				trend = "down"
+			}
+		} catch (e) {
+			trend = null
+		}
+	}
+	
+	return (
+		<ListItem
+			link={'/state/'+props.idKey}
+			name={props.name}
+			incidence={props.incidence}
+			key={props.idKey}
+			itemKey={props.idKey}
+			trend={trend}
+		/>
+	)
+}
+
 function StatesList(): JSX.Element {
 
 	const [statesIncidences, setStatesIncidences] = useState<any>(null);
-
 	useEffect(() => {
 		fetch(`${API_URL}/states`)
 			.then(r => r.json())
@@ -50,12 +97,19 @@ function StatesList(): JSX.Element {
 		}
 
 		out.push(
-			<ListItem
-				link={'state/'+key}
+			// <ListItem
+			// 	link={'state/'+key}
+			// 	name={name}
+			// 	incidence={incidence}
+			// 	key={key}
+			// 	itemKey={key}
+			// 	trend={"up"}
+			// />
+			<StateListItem
+				key={key}
+				idKey={key}
 				name={name}
 				incidence={incidence}
-				key={key}
-				itemKey={key}
 			/>
 		);
 	}
