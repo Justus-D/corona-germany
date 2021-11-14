@@ -24,6 +24,8 @@ import State from "./components/State";
 import AGS from "./components/AGS";
 import Top from "./components/Top";
 
+export const API_URL = "https://corona-germany-api.justus-d.de";
+
 function App() {
 	return (
 		<Router>

@@ -149,14 +149,6 @@ function renderDistricts(State: string, JSONresponse: any) {
 	}
 	var out = [];
 	for (var m = 0; m < districtsArr.length; m++) {
-		// var zusatz = "";
-		// if (zusaetze[districtsArr[m].ags]) {
-		// 	if (zusaetze[districtsArr[m].ags] === 2) {
-		// 		zusatz = ' <span style="color: #727272;">('+districtsArr[m].county.substr(0, zusaetze[districtsArr[m].ags])+")</span>";
-		// 	} else {
-		// 		zusatz = ' <span style="color: #727272;">('+zusaetze[districtsArr[m].ags]+")</span>";
-		// 	}
-		// }
 		let htmlStr = `
 			<a class="list-button" href="#${districtsArr[m].ags}">${zusatz(districtsArr[m])}</a>
 		`; // Vielleicht später nochmal in JSX umschreiben...

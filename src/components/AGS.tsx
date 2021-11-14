@@ -6,7 +6,8 @@ import Loading from "./Loading";
 import Fehler from "./Fehler";
 import BistOffline from './BistOffline';
 
-const API_URL = "https://corona-germany-api.justus-d.de";
+// const API_URL = "https://corona-germany-api.justus-d.de";
+import { API_URL } from '../App';
 
 export function formatDate(date: string): string {
 	let a = date.split("-");
