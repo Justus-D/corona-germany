@@ -165,7 +165,9 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 	for (var m = 0; m < districtsArr.length; m++) {
 		let incidence = null
 		if (districtsIncidences) {
-			incidence = districtsIncidences["data"][districtsArr[m].ags]["weekIncidence"].toFixed(1);
+			try {
+				incidence = districtsIncidences["data"][districtsArr[m].ags]["weekIncidence"].toFixed(1);
+			} catch (e) {}
 		}
 
 		out.push(<ListItem
