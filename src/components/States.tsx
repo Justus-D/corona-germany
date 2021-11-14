@@ -38,6 +38,8 @@ function StateListItem(props: { idKey: string, name: string, incidence?: string 
 
 	const [stateIncidences, setStateIncidences] = useState<any>(null);
 	useEffect(() => {
+		return // DISABLED FOR NOW
+		// eslint-disable-next-line
 		fetch(`${API_URL}/states/${props.idKey}/history/incidence/2`)
 			.then(r => r.json())
 			.then(data => setStateIncidences(data))
