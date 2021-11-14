@@ -172,7 +172,7 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 			key={districtsArr[m].ags}
 			itemKey={districtsArr[m].ags}
 			name={districtsArr[m].name}
-			link={districtsArr[m].ags}
+			link={"/"+districtsArr[m].ags}
 			zusatz={zusatz(districtsArr[m], true)}
 			incidence={incidence}
 		/>)
