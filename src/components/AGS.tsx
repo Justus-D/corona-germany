@@ -124,19 +124,24 @@ export default class AGS extends React.Component {
 		}
 		let historyArray: any = [];
 		let title: string = "Inzidenzen";
-		switch (this.state.ags) {
-			case "germany":
-				historyArray = this.state.response.data;
-				title = "Deutschland"
-				break;
-			case "none":
-				historyArray = this.state.response.data[this.state.stateKey||0].history;
-				title = this.state.response.data[this.state.stateKey||0].name;
-				break;
-			default:
-				historyArray = this.state.response["data"][this.state.ags]["history"];
-				title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
-				break;
+		try {
+			switch (this.state.ags) {
+				case "germany":
+					historyArray = this.state.response.data;
+					title = "Deutschland"
+					break;
+				case "none":
+					historyArray = this.state.response.data[this.state.stateKey||0].history;
+					title = this.state.response.data[this.state.stateKey||0].name;
+					break;
+				default:
+					historyArray = this.state.response["data"][this.state.ags]["history"];
+					title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
+					break;
+			}
+		} catch (e) {
+			console.error(e)
+			return <Redirect to="" />
 		}
 		try {
 			return (
