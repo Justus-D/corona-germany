@@ -23,6 +23,7 @@ import States from "./components/States";
 import State from "./components/State";
 import AGS from "./components/AGS";
 import Top from "./components/Top";
+import FAQ from "./components/FAQ";
 
 export const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -40,11 +41,11 @@ function App() {
 					<Route path="/incidence/district/:ags" component={AGS} />
 					<Route path="/incidence/:ags" component={AGS} />
 					{/* <Route path="/incidence/germany" render={(props)=><AGS germany {...props} />} /> */}
-					<Route path="/faq">
-						<h1>FAQ</h1>
-					</Route>
 					<Route path="/incidence/">
 						<States />
+					</Route>
+					<Route path="/faq">
+						<FAQ />
 					</Route>
 				</Switch>
 			</div>

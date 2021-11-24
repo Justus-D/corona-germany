@@ -128,6 +128,9 @@ export default function States() {
 			<div className="list">
 				<StatesList />
 			</div>
+			<div className="list">
+				<ListItem link={'/faq'} name="Tipps und FAQ" key="faq" itemKey="faq" />
+			</div>
 		</div>
 	);
 }
