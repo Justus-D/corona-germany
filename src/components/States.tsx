@@ -64,7 +64,7 @@ function StateListItem(props: { idKey: string, name: string, incidence?: string 
 	
 	return (
 		<ListItem
-			link={'/state/'+props.idKey}
+			link={'/incidence/state/'+props.idKey}
 			name={props.name}
 			incidence={props.incidence}
 			key={props.idKey}

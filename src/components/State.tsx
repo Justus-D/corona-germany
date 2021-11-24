@@ -125,7 +125,7 @@ export default class State extends React.Component {
 		try {
 			return <RenderDistricts State={this.state.stateKey} JSONresponse={this.state.response} />
 		} catch (e) {
-			return <Redirect to="/" />;
+			return <Redirect to="/incidence" />;
 		}
 	}
 }
@@ -174,7 +174,7 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 			key={districtsArr[m].ags}
 			itemKey={districtsArr[m].ags}
 			name={districtsArr[m].name}
-			link={"/"+districtsArr[m].ags}
+			link={"/incidence/district/"+districtsArr[m].ags}
 			zusatz={zusatz(districtsArr[m], true)}
 			incidence={incidence}
 		/>)
@@ -183,7 +183,7 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 		<div>
 			<Header title={statesList.data[State].name} subtitle="wähle deinen Landkreis" />
 			<div className="list">
-				<ListItem link={'/state/'+State+'/all'} name={`Inzidenzen für ganz ${statesList.data[State].name}`} key="all" itemKey="all" />
+				<ListItem link={'/incidence/state/'+State+'/all'} name={`Inzidenzen für ganz ${statesList.data[State].name}`} key="all" itemKey="all" />
 			</div>
 			<div className="list">
 				{out}

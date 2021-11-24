@@ -2,7 +2,7 @@
 
 import {
 	BrowserRouter as Router,
-	HashRouter,
+	// HashRouter,
 	Switch,
 	Route,
 	// Link,
@@ -29,27 +29,26 @@ export const API_URL = "https://corona-germany-api.justus-d.de";
 function App() {
 	return (
 		<Router>
-			<Switch>
-				<Route path="/incidence/">
-					<HashRouter hashType="noslash">
-						<div className="wrapper">
-							<Switch>
-								<Route exact path="/">
-									<States />
-								</Route>
-								<Route path="/state/:stateKey/all" component={AGS} />
-								<Route path="/state/:stateKey" component={State} />
-								<Route path="/top" component={Top} />
-								<Route path="/:ags" component={AGS} />
-							</Switch>
-						</div>
-						<Footer />
-					</HashRouter>
-				</Route>
-				<Route path="/">
-					<Redirect to="/incidence/" />
-				</Route>
-			</Switch>
+			<div className="wrapper">
+				<Switch>
+					<Route exact path="/">
+						<Redirect to="/incidence/" />
+					</Route>
+					<Route path="/incidence/state/:stateKey/all" component={AGS} />
+					<Route path="/incidence/state/:stateKey" component={State} />
+					<Route path="/incidence/top" component={Top} />
+					<Route path="/incidence/district/:ags" component={AGS} />
+					<Route path="/incidence/:ags" component={AGS} />
+					{/* <Route path="/incidence/germany" render={(props)=><AGS germany {...props} />} /> */}
+					<Route path="/faq">
+						<h1>FAQ</h1>
+					</Route>
+					<Route path="/incidence/">
+						<States />
+					</Route>
+				</Switch>
+			</div>
+			<Footer />
 		</Router>
 	);
 }

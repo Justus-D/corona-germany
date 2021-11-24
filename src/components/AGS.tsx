@@ -139,9 +139,16 @@ export default class AGS extends React.Component {
 					title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
 					break;
 			}
+			// if (this.props.germany) {
+			// 	historyArray = this.state.response.data;
+			// 	title = "Deutschland"
+			// } else {
+			// 	historyArray = this.state.response["data"][this.state.ags]["history"];
+			// 	title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
+			// }
 		} catch (e) {
 			console.error(e)
-			return <Redirect to="" />
+			return <Redirect to="/incidence" />
 		}
 		try {
 			return (
@@ -154,7 +161,7 @@ export default class AGS extends React.Component {
 			);
 		} catch (e) {
 			console.error(e)
-			return <Redirect to="/" />;
+			return <Redirect to="/incidence" />;
 		}
 	}
 }
