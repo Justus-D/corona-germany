@@ -32,8 +32,7 @@ export default function FAQ() {
 				<br /><br />
 
 				<u>K&ouml;nnen die Hospitalisierungsinzidenzen hinzugef&uuml;gt werden?</u><br /><br />
-				Dieses Feature ist unterwegs! Es wird in den n&auml;chsten Tagen umgesetzt und
-				ver&ouml;ffentlicht.
+				Die Hospitalisierungsinzidenzen sind jetzt verf&uuml;gbar!
 			</div>
 		</div>
 	)

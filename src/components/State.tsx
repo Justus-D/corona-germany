@@ -6,7 +6,7 @@ import Loading from "./Loading";
 import { ListItem } from "./States";
 import { API_URL } from "../App";
 
-const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
+export const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg","id":8},"BY":{"name":"Bayern","id":9},"BE":{"name":"Berlin","id":11},"BB":{"name":"Brandenburg","id":12},"HB":{"name":"Bremen","id":4},"HH":{"name":"Hamburg","id":2},"HE":{"name":"Hessen","id":6},"MV":{"name":"Mecklenburg-Vorpommern","id":13},"NI":{"name":"Niedersachsen","id":3},"NW":{"name":"Nordrhein-Westfalen","id":5},"RP":{"name":"Rheinland-Pfalz","id":7},"SL":{"name":"Saarland","id":10},"SN":{"name":"Sachsen","id":14},"ST":{"name":"Sachsen-Anhalt","id":15},"SH":{"name":"Schleswig-Holstein","id":1},"TH":{"name":"Thüringen","id":16}}}`);
 const zusaetze = JSON.parse(`
 	{
 		"0000":"Zusatz",
@@ -184,6 +184,7 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 			<Header title={statesList.data[State].name} subtitle="wähle deinen Landkreis" />
 			<div className="list">
 				<ListItem link={'/incidence/state/'+State+'/all'} name={`Inzidenzen für ganz ${statesList.data[State].name}`} key="all" itemKey="all" />
+				<ListItem link={'/incidence/hospital/state/'+State} name={`Hospitalisierungsinzidenzen für ganz ${statesList.data[State].name}`} key="hospital" itemKey="hospital" />
 			</div>
 			<div className="list">
 				{out}

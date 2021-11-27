@@ -69,7 +69,7 @@ export default class Top extends React.Component {
 			let linkText = disArr[o].weekIncidence.toFixed(1)+' - ' + zusatz(disArr[o]);
 			out.push(
 				<div className="list-item" key={disArr[o].ags}>
-					<Link to={disArr[o].ags} className="list-button" dangerouslySetInnerHTML={{__html: linkText}} />
+					<Link to={`/incidence/district/${disArr[o].ags}`} className="list-button" dangerouslySetInnerHTML={{__html: linkText}} />
 				</div>
 			);
 		}

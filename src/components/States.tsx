@@ -123,7 +123,8 @@ export default function States() {
 		<div>
 			<Header title="Deutschland" subtitle="w&auml;hle dein Bundesland" hideStart={true} />
 			<div className="list">
-				<ListItem link={'germany'} name="Inzidenzen f&uuml;r ganz Deutschland" key="germany" itemKey="germany" />
+				<ListItem link={'/incidence/germany'} name="Inzidenzen f&uuml;r ganz Deutschland" key="germany" itemKey="germany" />
+				<ListItem link={'/incidence/hospital/germany'} name="Hospitalisierungsinzidenzen f&uuml;r ganz Deutschland" key="hospital-germany" itemKey="hospital-germany" />
 			</div>
 			<div className="list">
 				<StatesList />

@@ -35,17 +35,22 @@ function App() {
 					<Route exact path="/">
 						<Redirect to="/incidence/" />
 					</Route>
+					<Route path="/incidence/hospital/germany" component={AGS} />
+					<Route path="/incidence/hospital/state/:stateKey" component={AGS} />
 					<Route path="/incidence/state/:stateKey/all" component={AGS} />
 					<Route path="/incidence/state/:stateKey" component={State} />
 					<Route path="/incidence/top" component={Top} />
 					<Route path="/incidence/district/:ags" component={AGS} />
-					<Route path="/incidence/:ags" component={AGS} />
-					{/* <Route path="/incidence/germany" render={(props)=><AGS germany {...props} />} /> */}
+					{/* <Route path="/incidence/:ags" component={AGS} /> */}
+					<Route path="/incidence/germany" component={AGS} />
 					<Route path="/incidence/">
 						<States />
 					</Route>
 					<Route path="/faq">
 						<FAQ />
+					</Route>
+					<Route path="/">
+						<Redirect to="/incidence/" />
 					</Route>
 				</Switch>
 			</div>
