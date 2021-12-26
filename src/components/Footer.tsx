@@ -1,7 +1,7 @@
 
 export default function Footer() {
 	return (
-		<footer>
+		<footer style={{padding: "10px"}}>
 			<span>Datenquelle: RKI (siehe GitHub: <a className="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK" rel="noreferrer">rki-covid-api</a>)</span><br /><br />
 			<span>
 				Datenquelle Hospitalisierungsinzidenzen:&nbsp;
