@@ -1,6 +1,6 @@
 import packageJson from '../../package.json'
 
-const pages = process.env.CF_PAGES //|| false
+const pages = process.env.CF_PAGES
 const commitSHA = process.env.CF_PAGES_COMMIT_SHA || "0123456789abcdef0123456789abcdef01234567"
 const branch = process.env.CF_PAGES_BRANCH || "dev"
 
@@ -20,7 +20,7 @@ export default function Footer() {
 			{packageJson.version ?
 				<>
 					<br /><br />
-					<span>Version: v{packageJson.version}{pages||true ? <>&nbsp;{branch}&nbsp;<span title={commitSHA}>{commitSHA.substring(0,7)}</span></> : null}</span>
+					<span>Version: v{packageJson.version}{pages ? <>&nbsp;{branch}&nbsp;<span title={commitSHA}>{commitSHA.substring(0,8)}</span></> : null}</span>
 				</>
 			: null }
 		</footer>
