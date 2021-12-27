@@ -1,6 +1,6 @@
 import packageJson from '../../package.json'
 
-const pages = process.env.CF_PAGES || false
+const pages = process.env.CF_PAGES //|| false
 const commitSHA = process.env.CF_PAGES_COMMIT_SHA || "0123456789abcdef0123456789abcdef01234567"
 const branch = process.env.CF_PAGES_BRANCH || "dev"
 
