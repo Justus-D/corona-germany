@@ -58,7 +58,7 @@ export function Map() {
 					})}
 				</div>
 			</> : null }
-			<div style={{width: "100%", textAlign: "right", marginTop: "12px"}}>
+			<div style={{width: "100%", textAlign: "center", marginTop: "12px"}}>
 				<div style={{width: "200px", margin: "0 auto"}}>
 					<button onClick={() => openLegend(!showLegend)} className="list-button" style={{ color: "rgb(114, 114, 114)" }}>
 						{showLegend ? "Legende verstecken" : "Legende anzeigen" }
