@@ -7,6 +7,7 @@ import Fehler from "./Fehler";
 import { formatDate } from "./AGS";
 import { zusatz } from "./State";
 import BistOffline from "./BistOffline";
+import { Map } from "./Map";
 
 const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -81,6 +82,7 @@ export default class Top extends React.Component {
 					hideTop
 				/>
 				<br />
+				<Map />
 				{out}
 			</div>
 		);
