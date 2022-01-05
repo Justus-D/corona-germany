@@ -15,7 +15,7 @@ export function Map() {
 
 	const [showLegend, openLegend] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(true)
-	const [legend, setLegend] = useState<null | legend>(null)
+	const [legendData, setLegend] = useState<null | legend>(null)
 	const [error, setError] = useState<boolean>(false)
 
 	useEffect(() => {
@@ -41,9 +41,9 @@ export function Map() {
 					style={{ height: "auto", width: "200px" }}
 				/>
 			</div>
-			{(showLegend && !loading && !error && legend) ? <>
+			{(showLegend && !loading && !error && legendData) ? <>
 				<div style={{ margin: "12px 0" }}>
-					{legend.incidentRanges.map((val) => {
+					{legendData.incidentRanges.map((val) => {
 						return (
 							<div key={val.color}>
 								<div style={{
