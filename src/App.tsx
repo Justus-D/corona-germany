@@ -19,7 +19,7 @@ export const API_URL = "https://corona-germany-api.justus-d.de";
 function App() {
 	return (
 		<Router>
-			<div className="wrapper">
+			<div className="root-wrapper">
 				<Switch>
 					<Route exact path="/">
 						<Redirect to="/incidence/" />
@@ -42,8 +42,8 @@ function App() {
 						<Redirect to="/incidence/" />
 					</Route>
 				</Switch>
+				<Footer />
 			</div>
-			<Footer />
 		</Router>
 	);
 }

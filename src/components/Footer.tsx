@@ -6,7 +6,7 @@ const branch = process.env.CF_PAGES_BRANCH || "dev"
 
 export default function Footer() {
 	return (
-		<footer style={{padding: "10px"}}>
+		<footer style={{padding: "10px", marginTop: "20px"}}>
 			<span>Datenquelle 7-Tage-Inzidenzen: Robert Koch-Institut (siehe GitHub: <a className="footer" href="https://github.com/marlon360/rki-covid-api#data-sources" target="_BLANK" rel="noreferrer">rki-covid-api</a>)</span>
 			<br />
 			<span>

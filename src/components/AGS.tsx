@@ -62,7 +62,7 @@ function RenderAGS(props: any) {
 	);
 
 	return (
-		<div>
+		<div className="wrapper">
 			<Header title={props.title} subtitle={props.subtitle || "7-Tage-Inzidenzen der letzten fünf Tage"} />
 			{top5}
 			{table}

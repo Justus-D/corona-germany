@@ -75,7 +75,7 @@ export default class Top extends React.Component {
 			);
 		}
 		return (
-			<div>
+			<div className="wrapper">
 				<Header
 					title="H&ouml;chste Inzidenzen"
 					subtitle={"Eine Liste der Kreise mit den höchsten Inzidenzen (Stand: "+formatDate(this.state.response.meta.lastUpdate.substr(0,10))+")"}

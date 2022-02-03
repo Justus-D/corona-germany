@@ -112,7 +112,7 @@ function StatesList(): JSX.Element {
 
 export default function States() {
 	return (
-		<div>
+		<div className="wrapper">
 			<Header title="Deutschland" subtitle="w&auml;hle dein Bundesland" hideStart={true} />
 			<div className="list">
 				<ListItem link={'/incidence/germany'} name="Inzidenzen f&uuml;r ganz Deutschland" key="germany" itemKey="germany" />

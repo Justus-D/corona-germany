@@ -179,7 +179,7 @@ function RenderDistricts(props: { State: string, JSONresponse: any }): JSX.Eleme
 		/>)
 	}
 	return (
-		<div>
+		<div className="wrapper">
 			<Header title={statesList.data[State].name} subtitle="wähle deinen Landkreis" />
 			<div className="list">
 				<ListItem link={'/incidence/state/'+State+'/all'} name={`Inzidenzen für ganz ${statesList.data[State].name}`} key="all" itemKey="all" />
