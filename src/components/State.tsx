@@ -114,7 +114,6 @@ export default class State extends React.Component {
 			.then(r => r.json())
 			.then(data => this.setState({response: data, loading: false}))
 		;
-		// this.setState({response: districtsSnapshot, loading: false});
 	}
 	render() {
 		if (this.state.loading) {

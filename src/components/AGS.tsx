@@ -8,7 +8,6 @@ import BistOffline from './BistOffline';
 import { parseHosIncidence } from '../hosIncidenceParser';
 import { statesList } from './State'
 
-// const API_URL = "https://corona-germany-api.justus-d.de";
 import { API_URL } from '../App';
 
 export function formatDate(date: string): string {
@@ -62,8 +61,6 @@ function RenderAGS(props: any) {
 		</div>
 	);
 
-/*<button id="list-button" className="list-button" onClick={() => { document.getElementById('table').hidden = false; document.getElementById("list-button").remove(); }}>Alle Werte anzeigen</button>*/
-
 	return (
 		<div>
 			<Header title={props.title} subtitle={props.subtitle || "7-Tage-Inzidenzen der letzten fünf Tage"} />
@@ -105,17 +102,7 @@ export default class AGS extends React.Component {
 	componentDidMount() {
 		var that = this;
 		let endpoint: string;
-		// switch (this.state.ags) {
-		// 	case "germany":
-		// 		endpoint = `${API_URL}/germany/history/incidence`;
-		// 		break;
-		// 	case "none":
-		// 		endpoint = `${API_URL}/states/${this.state.stateKey}/history/incidence`;
-		// 		break;
-		// 	default:
-		// 		endpoint = `${API_URL}/districts/${this.state.ags}/history/incidence`;
-		// 		break;
-		// }
+
 		if (this.props.location.pathname.substr(0, 18) === "/incidence/germany") {
 			endpoint = `${API_URL}/germany/history/incidence`;
 			this.setState({mode: "germany"})
@@ -193,13 +180,6 @@ export default class AGS extends React.Component {
 					title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
 					break;
 			}
-			// if (this.props.germany) {
-			// 	historyArray = this.state.response.data;
-			// 	title = "Deutschland"
-			// } else {
-			// 	historyArray = this.state.response["data"][this.state.ags]["history"];
-			// 	title = this.state.response["data"][this.state.ags]["name"] || "Inzidenzen"
-			// }
 		} catch (e) {
 			console.error(e)
 			return <Redirect to="/incidence" />

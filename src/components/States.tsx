@@ -99,14 +99,6 @@ function StatesList(): JSX.Element {
 		}
 
 		out.push(
-			// <ListItem
-			// 	link={'state/'+key}
-			// 	name={name}
-			// 	incidence={incidence}
-			// 	key={key}
-			// 	itemKey={key}
-			// 	trend={"up"}
-			// />
 			<StateListItem
 				key={key}
 				idKey={key}
