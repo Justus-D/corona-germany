@@ -67,15 +67,39 @@ export default class Top extends React.Component {
 		}
 		var out = [];
 		for (let o = disArr.length-1; o > 0; o--) {
-			let linkText = disArr[o].weekIncidence.toFixed(1)+' - ' + zusatz(disArr[o]);
+			let linkText = zusatz(disArr[o]);
 			out.push(
-				<div className="list-item" key={disArr[o].ags}>
-					<Link to={`/incidence/district/${disArr[o].ags}`} className="list-button" dangerouslySetInnerHTML={{__html: linkText}} />
-				</div>
+				<tr>
+					{/* Platz */}
+					<td style={{
+						color: "rgb(114, 114, 114)",
+						padding: "0",
+						paddingTop: "10px"
+					}}>
+						{(disArr.length - o) + '. '}
+					</td>
+
+					{/* Inzidenz */}
+					<td style={{
+						padding: "0",
+						paddingTop: "10px",
+						paddingRight: "4px"
+					}}>
+						{disArr[o].weekIncidence.toFixed(1)}
+					</td>
+
+					{/* Kreis */}
+					<td style={{
+						padding: "0",
+						paddingTop: "10px"
+					}}>
+						<Link to={`/incidence/district/${disArr[o].ags}`} className="list-button" dangerouslySetInnerHTML={{__html: linkText}} />
+					</td>
+				</tr>
 			);
 		}
 		return (
-			<div className="wrapper">
+			<div className="wrapper" style={{maxWidth: "400px"}}>
 				<Header
 					title="H&ouml;chste Inzidenzen"
 					subtitle={"Eine Liste der Kreise mit den höchsten Inzidenzen (Stand: "+formatDate(this.state.response.meta.lastUpdate.substr(0,10))+")"}
@@ -83,7 +107,18 @@ export default class Top extends React.Component {
 				/>
 				<br />
 				<Map />
-				{out}
+				<table style={{width: "100%"}}>
+					<thead hidden>
+						<tr>
+							<th>Platz</th>
+							<th>Inzidenz</th>
+							<th>Kreis</th>
+						</tr>
+					</thead>
+					<tbody>
+						{out}
+					</tbody>
+				</table>
 			</div>
 		);
 	}
