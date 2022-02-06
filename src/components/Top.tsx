@@ -69,7 +69,7 @@ export default class Top extends React.Component {
 		for (let o = disArr.length-1; o > 0; o--) {
 			let linkText = zusatz(disArr[o]);
 			out.push(
-				<tr>
+				<tr key={o + disArr[o]}>
 					{/* Platz */}
 					<td style={{
 						color: "rgb(114, 114, 114)",
