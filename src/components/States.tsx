@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Header from './Header';
 import { API_URL } from '../App';
+import Fehler from './Fehler';
 
 const statesList = JSON.parse(`{"data":{"BW":{"name":"Baden-Württemberg"},"BY":{"name":"Bayern"},"BE":{"name":"Berlin"},"BB":{"name":"Brandenburg"},"HB":{"name":"Bremen"},"HH":{"name":"Hamburg"},"HE":{"name":"Hessen"},"MV":{"name":"Mecklenburg-Vorpommern"},"NI":{"name":"Niedersachsen"},"NW":{"name":"Nordrhein-Westfalen"},"RP":{"name":"Rheinland-Pfalz"},"SL":{"name":"Saarland"},"SN":{"name":"Sachsen"},"ST":{"name":"Sachsen-Anhalt"},"SH":{"name":"Schleswig-Holstein"},"TH":{"name":"Thüringen"}}}`);
 
@@ -87,25 +88,31 @@ function StatesList(): JSX.Element {
 
 	const statesJSON = statesList;
 	var out: any = [];
-	const states = Object.keys(statesJSON["data"]);
-	var key;
-	for (var i = 0; i < states.length; i++) {
-		key = states[i];
-		let incidence = null
-		let name = statesJSON["data"][key]["name"]
 
-		if (statesIncidences) {
-			incidence = statesIncidences["data"][key]["weekIncidence"].toFixed(1);
+	try {
+		const states = Object.keys(statesJSON["data"]);
+		var key;
+		for (var i = 0; i < states.length; i++) {
+			key = states[i];
+			let incidence = null
+			let name = statesJSON["data"][key]["name"]
+
+			if (statesIncidences) {
+				incidence = statesIncidences["data"][key]["weekIncidence"].toFixed(1);
+			}
+
+			out.push(
+				<StateListItem
+					key={key}
+					idKey={key}
+					name={name}
+					incidence={incidence}
+				/>
+			);
 		}
-
-		out.push(
-			<StateListItem
-				key={key}
-				idKey={key}
-				name={name}
-				incidence={incidence}
-			/>
-		);
+	} catch (e) {
+		console.error(e)
+		out.push(<Fehler standalone />)
 	}
 	return out;
 }
@@ -119,7 +126,14 @@ export default function States() {
 				<ListItem link={'/incidence/hospital/germany'} name="Hospitalisierungsinzidenzen f&uuml;r ganz Deutschland" key="hospital-germany" itemKey="hospital-germany" />
 			</div>
 			<div className="list">
-				<StatesList />
+				{(()=>{
+					try {
+						return <StatesList />
+					} catch (e) {
+						console.error(e)
+						return "Error"
+					}
+				})()}
 			</div>
 			<div className="list">
 				<ListItem link={'/faq'} name="Tipps und FAQ" key="faq" itemKey="faq" />
