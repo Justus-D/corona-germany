@@ -13,6 +13,7 @@ import State from "./components/State";
 import AGS from "./components/AGS";
 import Top from "./components/Top";
 import FAQ from "./components/FAQ";
+import Header from "./components/Header";
 
 export const API_URL = "https://corona-germany-api.justus-d.de";
 
@@ -21,6 +22,21 @@ function App() {
 		<Router>
 			<div className="root-wrapper">
 				<Switch>
+					<Route path="/">
+						<div className="wrapper">
+							<Header
+								title="Eingestellt"
+								subtitle="Bis auf Weiteres eingestellt"
+								hideStart
+								hideTop
+							/>
+							<p>
+								Die Datenquellen sind mittlerweile nicht mehr erreichbar.
+								<br /><br />
+								Vielen Dank f&uuml;r Ihre Unterst&uuml;tzung.
+							</p>
+						</div>
+					</Route>
 					<Route exact path="/">
 						<Redirect to="/incidence/" />
 					</Route>
